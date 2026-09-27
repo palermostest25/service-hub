@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090c12">
+    <meta name="description" content="A local launchpad for services on this server.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Service Hub</title>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <a class="brand" href="/" aria-label="Service Hub home">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h6v6H4zM14 5.5h6v6h-6zM4 15.5h6v3H4zM14 15.5h6v3h-6z"/></svg>
+          </span>
+          <span><strong>Service Hub</strong><small id="hubHost">Local server</small></span>
+        </a>
+        <div class="header-actions">
+          <button class="secondary-button" id="refreshButton" type="button">
+            <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-15.4-2M4 4v5h5M4 13a8 8 0 0 0 15.4 2M20 20v-5h-5"/></svg>
+            Scan
+          </button>
+          <button class="primary-button" id="addButton" type="button">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Add service
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div>
+            <p class="eyebrow">Local launchpad</p>
+            <h1>Everything on this server,<br><span>one click away.</span></h1>
+          </div>
+          <div class="summary" aria-live="polite">
+            <strong id="onlineCount">—</strong>
+            <span>services online</span>
+            <small id="scanTime">Scanning the host…</small>
+          </div>
+        </section>
+
+        <section class="toolbar" aria-label="Filter services">
+          <label class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input id="searchInput" type="search" placeholder="Find a service or port…" autocomplete="off">
+          </label>
+          <div class="legend"><span class="online-dot"></span> Live status from this host</div>
+        </section>
+
+        <section aria-labelledby="servicesTitle">
+          <div class="section-title">
+            <h2 id="servicesTitle">Services</h2>
+            <span id="serviceCount">0 found</span>
+          </div>
+          <div class="service-grid" id="serviceGrid">
+            <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+          </div>
+          <div class="empty" id="emptyState" hidden>
+            <strong>No matching services</strong>
+            <span>Try a different name or port.</span>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>Service Hub</span>
+        <span>Auto-discovery refreshes every 30 seconds</span>
+      </footer>
+    </div>
+
+    <dialog id="addDialog">
+      <form id="addForm">
+        <button class="close-button" id="closeDialog" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+        <p class="eyebrow">Custom shortcut</p>
+        <h2>Add a service</h2>
+        <p class="dialog-copy">Use this when a service is on another machine or cannot be identified automatically.</p>
+        <label>Name<input name="name" type="text" maxlength="60" placeholder="Home Assistant" required></label>
+        <label>URL<input name="url" type="url" maxlength="300" placeholder="http://192.168.1.10:8123" required></label>
+        <label>Description <span>optional</span><input name="description" type="text" maxlength="120" placeholder="Smart home controls"></label>
+        <button class="primary-button full-button" type="submit">Save service</button>
+      </form>
+    </dialog>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
